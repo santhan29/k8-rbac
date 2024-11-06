@@ -47,3 +47,25 @@ roleRef:
   kind: Role #this must be Role or ClusterRole
   name: expense-admin # this must match the name of the Role or ClusterRole you wish to bind to
   apiGroup: rbac.authorization.k8s.io 
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: expense
+rules:
+- apiGroups: ["rbac.authorization.k8s.io"]
+  resources: ["nodes","persistentvolumes","namespaces"] 
+  verbs: ["get", "list", "watch"] 
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: expense
+subjects:
+- kind: User
+  name: ramesh
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: expense 
+  apiGroup: rbac.authorization.k8s.io
